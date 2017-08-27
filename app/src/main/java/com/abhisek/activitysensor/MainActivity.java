@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null) {
             // fai! we dont have an accelerometer!
-            Toast.makeText(this, "This device don't have an accelerometer!", Toast.LENGTH_SHORT)
+            Toast.makeText(this, "This device don't have an accelerometer sensor !", Toast.LENGTH_SHORT)
                     .show();
         }
     }
@@ -76,6 +76,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+    /**
+     * Getting accelerometer data
+     * @param event
+     */
     private void getAccelerometer(SensorEvent event) {
         float[] values = event.values;
         // Movement
@@ -125,6 +129,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    /**
+     * writing to csv
+     * @param values
+     * @param timestamp
+     */
     private void write2csv(float[] values, String timestamp) {
 
         try {
@@ -187,9 +196,28 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 .show();
     }
 
+    /**
+     * Adding permission
+     * @return
+     */
     private boolean shouldAskPermission(){
 
         return(Build.VERSION.SDK_INT>Build.VERSION_CODES.LOLLIPOP_MR1);
 
     }
+
+    public double getDistance(double lat1, double lon1, double lat2, double lon2)
+    {
+        double latA = Math.toRadians(lat1);
+        double lonA = Math.toRadians(lon1);
+        double latB = Math.toRadians(lat2);
+        double lonB = Math.toRadians(lon2);
+        double cosAng = (Math.cos(latA) * Math.cos(latB) * Math.cos(lonB-lonA)) +
+                (Math.sin(latA) * Math.sin(latB));
+        double ang = Math.acos(cosAng);
+        double dist = ang *6371;
+        return dist;
+    }
+
+
 }
