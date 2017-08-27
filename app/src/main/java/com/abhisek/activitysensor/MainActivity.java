@@ -62,16 +62,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null) {
-            // fai! we dont have an accelerometer!
+            // fail ! we dont have an accelerometer!
             Toast.makeText(this, "This device don't have an accelerometer sensor !", Toast.LENGTH_SHORT)
                     .show();
         }
+
+
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+
+        //getting the travelling mode data from Start Activity
+        Bundle extras = getIntent().getExtras();
+        String mode = extras.getString("mode");
+//        Toast.makeText(this, mode, Toast.LENGTH_SHORT).show();
+
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            getAccelerometer(event);
+            getAccelerometer(event,mode);
+//            SystemClock.sleep(5000);
         }
 
     }
@@ -80,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
      * Getting accelerometer data
      * @param event
      */
-    private void getAccelerometer(SensorEvent event) {
+    private void getAccelerometer(SensorEvent event, String mode) {
         float[] values = event.values;
         // Movement
         float x = values[0];
@@ -118,7 +127,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             txtView_time.setText("Timestamp : " + timestamp);
 //            System.out.println("Timestamp : " + timestamp);
 
-            write2csv(values, timestamp);
+            String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+            String fileName = "AccelerometerSensorData"+date+".csv";
+
+            write2csv(values, timestamp, mode, fileName);
 
             if (color) {
                 view.setBackgroundColor(Color.GREEN);
@@ -130,11 +143,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     /**
-     * writing to csv
+     * write to csv
      * @param values
      * @param timestamp
+     * @param mode
+     * @param fileName
      */
-    private void write2csv(float[] values, String timestamp) {
+    private void write2csv(float[] values, String timestamp, String mode, String fileName) {
 
         try {
 
@@ -146,21 +161,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
 
             String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
-            String fileName = "AccelerometerSensorData.csv";
             String filePath = baseDir + File.separator + fileName;
             File f = new File(filePath);
             CSVWriter writer;
+
             // File exist
             if (f.exists() && !f.isDirectory()) {
                 FileWriter mFileWriter = new FileWriter(filePath, true); // true is for append mode
                 writer = new CSVWriter(mFileWriter);
             } else {
                 writer = new CSVWriter(new FileWriter(filePath));
-                String[] data = {"x-value", "y-value", "z-value", "timestamp"};
+                String[] data = {"x-value", "y-value", "z-value", "timestamp","travel-mode"};
                 writer.writeNext(data);
             }
 
-            String[] data = {String.valueOf(values[0]), String.valueOf(values[1]), String.valueOf(values[2]), timestamp};
+            String[] data = {String.valueOf(values[0]), String.valueOf(values[1]), String.valueOf(values[2]), timestamp, mode};
             writer.writeNext(data);
             writer.close();
 
@@ -178,8 +193,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onResume() {
         super.onResume();
-        // register this class as a listener for the orientation and
-        // accelerometer sensors
+        // register this class as a listener for the orientation and accelerometer sensors
         sensorManager.registerListener(this,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
@@ -191,9 +205,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onPause() {
         // unregister listener
         super.onPause();
-        sensorManager.unregisterListener(this);
-        Toast.makeText(this, "App paused ...", Toast.LENGTH_SHORT)
-                .show();
+//        sensorManager.unregisterListener(this);
+//        Toast.makeText(this, "App paused ...", Toast.LENGTH_SHORT)
+//                .show();
     }
 
     /**
