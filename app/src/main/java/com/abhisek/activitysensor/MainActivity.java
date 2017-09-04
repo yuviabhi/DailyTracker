@@ -1,5 +1,6 @@
 package com.abhisek.activitysensor;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView txtView_z;
     private TextView txtView_time;
 
+    Button btn_stop ;
+
     /**
      * Called when the activity is first created.
      */
@@ -56,6 +60,24 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         txtView_z = (TextView) findViewById(R.id.textView_z);
         txtView_time = (TextView) findViewById(R.id.textView_time);
 
+        btn_stop = (Button) findViewById(R.id.button_stop);
+
+        btn_stop.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                String mode = "Select";
+
+                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                intent.putExtra("mode",mode);
+                startActivity(intent);
+
+                finish();
+
+
+            }
+        });
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lastUpdate = System.currentTimeMillis();
@@ -80,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             getAccelerometer(event,mode);
-//            SystemClock.sleep(5000);
+//            SystemClock.sleep(10);
         }
 
     }
@@ -129,7 +151,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-            String fileName = "AccelerometerSensorData"+date+".csv";
+            date= date.replace("-","");
+
+            String fileName = "AccSensor_Data_"+date+".csv";
 
             write2csv(values, timestamp, mode, fileName);
 
@@ -143,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     /**
-     * write to csv
+     * write to csv file
      * @param values
      * @param timestamp
      * @param mode
@@ -197,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sensorManager.registerListener(this,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
-        Toast.makeText(this, "App resumed ...", Toast.LENGTH_SHORT)
+        Toast.makeText(this, "Activity sensor running...", Toast.LENGTH_SHORT)
                 .show();
     }
 
@@ -220,6 +244,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+    /**
+     * Not used
+     * @param lat1
+     * @param lon1
+     * @param lat2
+     * @param lon2
+     * @return
+     */
     public double getDistance(double lat1, double lon1, double lat2, double lon2)
     {
         double latA = Math.toRadians(lat1);

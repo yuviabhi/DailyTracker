@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -20,7 +21,7 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         this.arraySpinner = new String[] {
-               "", "Walk", "Run", "Work-out", "Cycling", "Biking", "Travel by bus/car" , "Travel by train" , "Something else"
+               "Select", "Walk", "Run", "Work-out", "Cycling", "Biking", "Travel by bus/car" , "Travel by train" , "Dummy shake", "Something else"
         };
 
         final Spinner s = (Spinner) findViewById(R.id.spinner_mode);
@@ -28,6 +29,8 @@ public class StartActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         s.setAdapter(adapter);
+
+
 
         button_start = (Button) findViewById(R.id.button_start);
 
@@ -38,14 +41,24 @@ public class StartActivity extends AppCompatActivity {
 
                 String mode = s.getSelectedItem().toString().trim();
 
-                if(mode !="") {
+                if(mode !="Select") {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("mode",mode);
                     startActivity(intent);
+                } else  {
+                    Toast.makeText(getApplicationContext(),"Select your activity mode !",Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+        finish();
 
     }
 }
