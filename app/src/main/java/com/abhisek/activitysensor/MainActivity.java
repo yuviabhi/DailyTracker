@@ -67,11 +67,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View v) {
 
-                String mode = "Select";
-
-                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-                intent.putExtra("mode",mode);
-                startActivity(intent);
+//                String mode = "Select";
+//
+//                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+//                intent.putExtra("mode",mode);
+//                startActivity(intent);
 
                 finish();
 
