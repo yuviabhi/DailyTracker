@@ -43,6 +43,14 @@ import pandas as pd
 import numpy as np
 import sys
 
+#if (len(sys.argv)==''):
+#	print 'Run as python filter.py 20170904'
+
+
+if(len(sys.argv)!=2):
+	print 'Run : python filter.py 20170904'	
+	sys.exit(0)
+	
 _date = str(sys.argv[1])
 input_df = pd.read_csv('/home/abhisek/Documents/abhisek-workspace/codes/activity sensor/datasets/AccSensor_Data_' + _date + '.csv',delimiter=',')
 print input_df.head()
@@ -56,9 +64,9 @@ unique_timestamps = np.unique(input_df[['timestamp']].values)
 #print unique_timestamps
 
 for _timestamp in unique_timestamps:
-	mean_x = input_df.loc[input_df['timestamp'] == _timestamp]['x-value'].mean()
-	mean_y = input_df.loc[input_df['timestamp'] == _timestamp]['y-value'].mean()
-	mean_z = input_df.loc[input_df['timestamp'] == _timestamp]['z-value'].mean()
+	mean_x = input_df.loc[input_df['timestamp'] == _timestamp]['x-value'].median()
+	mean_y = input_df.loc[input_df['timestamp'] == _timestamp]['y-value'].median()
+	mean_z = input_df.loc[input_df['timestamp'] == _timestamp]['z-value'].median()
 	timestamp = _timestamp
 	# four spaces provide to get travel mode from following string (first split by \n and then split by 4spaces)
 	#"2915    Walk
