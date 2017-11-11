@@ -35,6 +35,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.abhisek.activitysensor.FileUploadActivity" />
         </activity>
+        <activity android:name=".RegularActivity" />
+        <activity android:name=".IrregularActivity"></activity>
     </application>
 
 </manifest>
