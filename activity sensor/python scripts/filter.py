@@ -53,6 +53,7 @@ if(len(sys.argv)!=2):
 	
 _date = str(sys.argv[1])
 input_df = pd.read_csv('/home/abhisek/Documents/abhisek-workspace/codes/activity sensor/datasets/AccSensor_Data_' + _date + '.csv',delimiter=',')
+print '\n----------------- Input ------------------'	
 print input_df.head()
 output_file = '/home/abhisek/Documents/abhisek-workspace/codes/activity sensor/datasets/filter_' + _date + '.csv'
 
@@ -78,11 +79,8 @@ for _timestamp in unique_timestamps:
 		
 
 output_df = pd.read_csv('/home/abhisek/Documents/abhisek-workspace/codes/activity sensor/datasets/filter_' + _date + '.csv',delimiter=',')
+print '\n----------------- Output ------------------'	
 print output_df.head()
 
 
 
-    # uniquevalues = np.unique(input[['timestamp']].values)
-    # print uniquevalues
-    # input.loc[input['timestamp']=='04-09-2017 07:31:24']['x-value']
-    # input.loc[input['timestamp']=='04-09-2017 07:31:24']['x-value'].mean()

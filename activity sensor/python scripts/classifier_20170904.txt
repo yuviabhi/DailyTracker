@@ -1,0 +1,96 @@
+ 
+===========  KNN  ===========
+ 
+Cross-validation :  [ 0.51162791  0.5952381   0.56097561  0.65853659  0.55        0.575       0.6
+  0.525       0.5         0.525     ]
+Mean :  0.560137819734
+SD :  0.0461159443865
+Accuracy Score :  0.760869565217
+Precision Score :  0.448717948718
+F1 Score :  0.432098765432
+Recall Score :  0.416666666667
+Jaccard Similarity Score :  0.760869565217
+ 
+===========  Linear SVM  ===========
+ 
+Cross-validation :  [ 0.90697674  0.85714286  0.87804878  0.90243902  0.9         0.9         0.85
+  0.925       0.875       0.9       ]
+Mean :  0.889460740621
+SD :  0.022388511895
+Accuracy Score :  0.913043478261
+Precision Score :  0.75
+F1 Score :  0.808333333333
+Recall Score :  0.952380952381
+Jaccard Similarity Score :  0.913043478261
+ 
+===========  RBF SVM  ===========
+ 
+Cross-validation :  [ 0.6744186   0.69047619  0.70731707  0.70731707  0.725       0.7         0.7
+  0.7         0.7         0.725     ]
+Mean :  0.702952894147
+SD :  0.0141950484923
+Accuracy Score :  0.913043478261
+Precision Score :  0.45652173913
+F1 Score :  0.477272727273
+Recall Score :  0.5
+Jaccard Similarity Score :  0.913043478261
+ 
+===========  Decision Tree  ===========
+ 
+Cross-validation :  [ 0.90697674  0.92857143  0.95121951  0.87804878  0.9         0.9         0.85
+  0.925       0.925       0.9       ]
+Mean :  0.906481646544
+SD :  0.0270188425703
+Accuracy Score :  0.978260869565
+Precision Score :  0.9
+F1 Score :  0.938420348059
+Recall Score :  0.988095238095
+Jaccard Similarity Score :  0.978260869565
+ 
+===========  Random Forest  ===========
+ 
+Cross-validation :  [ 0.95348837  0.95238095  0.95121951  0.92682927  0.95        0.875       0.9
+  0.95        0.95        0.9       ]
+Mean :  0.930891810496
+SD :  0.0274408065312
+Accuracy Score :  0.95652173913
+Precision Score :  0.833333333333
+F1 Score :  0.887804878049
+Recall Score :  0.97619047619
+Jaccard Similarity Score :  0.95652173913
+ 
+===========  Neural Network  ===========
+ 
+Cross-validation :  [ 0.30232558  0.69047619  0.73170732  0.70731707  0.7         0.7         0.65
+  0.475       0.375       0.625     ]
+Mean :  0.595682616212
+SD :  0.146577069855
+Accuracy Score :  0.913043478261
+Precision Score :  0.45652173913
+F1 Score :  0.477272727273
+Recall Score :  0.5
+Jaccard Similarity Score :  0.913043478261
+ 
+===========  AdaBoost  ===========
+ 
+Cross-validation :  [ 0.93023256  0.61904762  0.56097561  0.56097561  0.575       0.6         0.6
+  0.7         0.525       0.575     ]
+Mean :  0.62462313967
+SD :  0.111028901752
+Accuracy Score :  0.521739130435
+Precision Score :  0.576923076923
+F1 Score :  0.455913978495
+Recall Score :  0.738095238095
+Jaccard Similarity Score :  0.521739130435
+ 
+===========  Naive Bayes  ===========
+ 
+Cross-validation :  [ 0.90697674  0.88095238  0.90243902  0.92682927  0.925       0.9         0.875
+  0.95        0.9         0.9       ]
+Mean :  0.906719741782
+SD :  0.0210610919274
+Accuracy Score :  0.913043478261
+Precision Score :  0.75
+F1 Score :  0.808333333333
+Recall Score :  0.952380952381
+Jaccard Similarity Score :  0.913043478261

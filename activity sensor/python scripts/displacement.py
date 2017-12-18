@@ -65,4 +65,4 @@ for row in input_df.itertuples():
 
 output_df = pd.read_csv(output_file,delimiter=',')
 print '\n----------------- Output ------------------'	
-print output_df.head(100)
+print output_df.head()

@@ -3,11 +3,7 @@
 #import numpy as np
 #import sys
 
-
-
-
 def difference_bw_timestamps(tsa,tsb):
-
 
 	ts_a = tsa.split(' ')
 	a = str(ts_a[1])
@@ -20,7 +16,12 @@ def difference_bw_timestamps(tsa,tsb):
 	b = b.split(":")
 
 	sec = 0
-	if(int(b[2]) > int(a[2]) or int(b[2]) == int(a[2])):
+	
+	if(len(b)==2 and len(a)==2):
+		b.append("0")
+		a.append("0")
+
+	if(int(b[2]) > int(a[2]) or int(b[2]) == int(a[2])):		
 		sec = int(b[2]) - int(a[2])
 		#print sec
 	elif(int(b[2]) < int(a[2])):

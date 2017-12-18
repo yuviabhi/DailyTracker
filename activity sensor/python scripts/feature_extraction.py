@@ -4,19 +4,7 @@ import numpy as np
 import datetime
 import calendar
 
-if(len(sys.argv)==1):
-	_date='20170907'
-	print 'Default file taken : 20170907'
 
-if(len(sys.argv)==2):
-	_date = str(sys.argv[1])
-	
-input_df = pd.read_csv('/home/abhisek/Documents/abhisek-workspace/codes/activity sensor/datasets/displacement_' + _date + '.csv',delimiter=',')
-print '\n----------------- Input ------------------'	
-print input_df.head()
-output_file = '/home/abhisek/Documents/abhisek-workspace/codes/activity sensor/datasets/feature_extraction_' + _date + '.csv'
-
-output_file_labelled = '/home/abhisek/Documents/abhisek-workspace/codes/activity sensor/datasets/labelled_' + _date + '.csv'
 
 
 def time_of_day(hour):
@@ -41,15 +29,26 @@ def time_of_day(hour):
 		return 5
 	elif(hour >= 20 and hour < 24):
 		return 6
+
+
+def count_letters(word):  return len(filter(lambda x: x not in " ", word))
+
 		
 def day_of_week(date):
 	'''
 	Sun =	0,	Mon =	1,	Tues = 2,	Wed = 3,	Thurs = 4,	Fri = 5,	Sat = 6
 	'''
-	ts_date = datetime.datetime.strptime(str(timestamp[0]), '%d-%m-%Y')
+	#when format is 15-10-2017
+	if(count_letters(date)==10):
+		ts_date = datetime.datetime.strptime(str(date), '%d-%m-%Y')
+	#when format is 15-10-17	
+	elif(count_letters(date)==8):
+		ts_date = datetime.datetime.strptime(str(date), '%d-%m-%y')
 	#print ts_date.weekday()
 	#print calendar.day_name[ts_date.weekday()]	
 	return int(ts_date.weekday()) + 1
+
+
 
 def getActivityLabel(act):
 	'''
@@ -82,59 +81,81 @@ def getActivityLabel(act):
 	elif(act == 'Something else'):
 		return 9
 
-		
-fv = []
-feature_vector = np.array([])
-feature_vector.reshape(1,-1)
 
-label = []
-label_np = np.array([])
-label_np.reshape(1,-1)
 
-#Feature Vector
-fv.append(['time_of_day','day_of_week','disp','velocity','acc'])
-for row in input_df.itertuples():
-	timestamp = row[4]
-	timestamp = timestamp.split(" ")
-	labelled_day_of_week = day_of_week(timestamp[0])
-	time = timestamp[1].split(":")
-	hour = int(time[0])
-	labelled_time_of_day = time_of_day(hour)
-	disp = int(row[6])	
-	velocity = int(row[7])
-	aggr_acc = int(row[8])
+def main():		
+	if(len(sys.argv)==1):
+		_date='20170907'
+	print 'Default file taken : 20170907'
+
+	if(len(sys.argv)==2):
+		_date = str(sys.argv[1])
+
+	input_df = pd.read_csv('/home/abhisek/Documents/abhisek-workspace/codes/activity sensor/datasets/displacement_' + _date + '.csv',delimiter=',')
+	print '\n----------------- Input ------------------'	
+	print input_df.head()
+	output_file = '/home/abhisek/Documents/abhisek-workspace/codes/activity sensor/datasets/feature_extraction_' + _date + '.csv'
+
+	output_file_labelled = '/home/abhisek/Documents/abhisek-workspace/codes/activity sensor/datasets/labelled_' + _date + '.csv'
 	
-	fv.append([labelled_time_of_day , labelled_day_of_week		, disp, velocity, aggr_acc])
-	#print labelled_time_of_day , labelled_day_of_week		, disp, velocity, aggr_acc
+	fv = []
+	feature_vector = np.array([])
+	feature_vector.reshape(1,-1)
 
+	label = []
+	label_np = np.array([])
+	label_np.reshape(1,-1)
 
-#Label extraction from the dataset
-label.append(['activity-label'])
-for row in input_df.itertuples():
-	act_label = getActivityLabel(str(row[5]))
-	label.append([act_label])
-
-try :
-	feature_vector= np.array([fv])
-	#print feature_vector
+	#Creating Feature Vector
+	fv.append(['time_of_day','day_of_week','disp','velocity','acc'])
+	for row in input_df.itertuples():
+		timestamp = row[4]
+		timestamp = timestamp.split(" ")
+		labelled_day_of_week = day_of_week(timestamp[0])
+		time = timestamp[1].split(":")
+		hour = int(time[0])
+		labelled_time_of_day = time_of_day(hour)
+		disp = int(row[6])	
+		velocity = int(row[7])
+		aggr_acc = int(row[8])
 	
-	#write feature-vector into file
-	with open(output_file,'w') as f:
-		for row in feature_vector:
-			np.savetxt(f, row, delimiter=',', fmt='%s')
-	
-	#read feature-vector from file
-	with open(output_file) as f:print f.read()
+		fv.append([labelled_time_of_day , labelled_day_of_week		, disp, velocity, aggr_acc])
+		#print labelled_time_of_day , labelled_day_of_week		, disp, velocity, aggr_acc
 
-	#write label-data into file
-	label_np = np.array([label])
-	with open(output_file_labelled,'w') as f:
-		for row in label_np:
-			np.savetxt(f, row, delimiter=',', fmt='%s')
 
-except Exception,e:
-	print str(e)
+	#Label extraction from the dataset
+	label.append(['activity-label'])
+	for row in input_df.itertuples():
+		act_label = getActivityLabel(str(row[5]))
+		label.append([act_label])
+
+	try :
+		feature_vector= np.array([fv])
+		#print feature_vector
 	
+		#write feature-vector into file
+		print '\nExtracting feature-vector...'	
+		with open(output_file,'w') as f:
+			for row in feature_vector:
+				np.savetxt(f, row, delimiter=',', fmt='%s')
+	
+		#read feature-vector from file
+		with open(output_file) as f:print f.read()
+
+		#write label-data into file
+		print '\nExtracting label-data...'	
+		label_np = np.array([label])
+		with open(output_file_labelled,'w') as f:
+			for row in label_np:
+				np.savetxt(f, row, delimiter=',', fmt='%s')
+
+	except Exception,e:
+		print str(e)
+	
+	
+if __name__ == "__main__":
+	main()
+
 	
 	
 	

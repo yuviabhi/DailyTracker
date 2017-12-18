@@ -1,4 +1,4 @@
-time_of_day,day_of_week,disp,velocity,aggr_acc
+time_of_day,day_of_week,disp,velocity,acc
 3,4,7,0,15
 3,4,28,19,19
 3,4,40,33,14

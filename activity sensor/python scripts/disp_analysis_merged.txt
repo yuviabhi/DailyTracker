@@ -1,0 +1,28 @@
+
+-----------  04-09-2017  --------------
+Today you have been  Dummy shake  for  1935  sec and covered  92070.0984312  mtr
+Today you have been  Walk  for  5788  sec and covered  203400.612359  mtr
+
+-----------  06-10-2017  --------------
+Today you have been  Walk  for  2419  sec and covered  2922.84450918  mtr
+
+-----------  07-09-2017  --------------
+Today you have been  Biking  for  278  sec and covered  865.301735736  mtr
+Today you have been  Walk  for  222  sec and covered  1113.21224176  mtr
+
+-----------  08-09-2017  --------------
+Today you have been  Biking  for  1868  sec and covered  2147.3665774  mtr
+
+-----------  11-09-2017  --------------
+Today you have been  Walk  for  2  sec and covered  29.0446728508  mtr
+
+-----------  11-10-2017  --------------
+Today you have been  Biking  for  2570  sec and covered  15317.4346309  mtr
+Today you have been  Dummy shake  for  73  sec and covered  10450.478049  mtr
+Today you have been  Walk  for  5236  sec and covered  572504.5766  mtr
+
+-----------  12-10-2017  --------------
+Today you have been  Biking  for  0  sec and covered  65.1072877674  mtr
+Today you have been  Run  for  291  sec and covered  176858.54725  mtr
+Today you have been  Walk  for  10657  sec and covered  1698166.94012  mtr
+Today you have been  Work-out  for  295  sec and covered  367636.538715  mtr
