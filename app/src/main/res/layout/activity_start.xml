@@ -3,64 +3,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_vertical|center|center_horizontal"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.abhisek.activitysensor.StartActivity"
-    android:orientation="vertical"
-    android:gravity="center_vertical|center|center_horizontal"
-    android:weightSum="1">
+    android:weightSum="1"
+    tools:context="com.abhisek.activitysensor.StartActivity">
 
     <TextView
+        android:id="@+id/textView_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="You are going to ?"
-        android:id="@+id/textView_mode"
         android:layout_above="@+id/spinner_mode"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
-        android:textSize="@dimen/abc_text_size_headline_material"
-        android:textStyle="bold"
+        android:background="@drawable/notification_template_icon_bg"
+        android:text="You are going to ?"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/accent_material_light"
-        android:background="@drawable/notification_template_icon_bg" />
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:textStyle="bold" />
 
     <Spinner
+        android:id="@+id/spinner_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner_mode"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="6dp"
+        android:layout_weight="0.16"
+        android:background="@drawable/abc_popup_background_mtrl_mult"
+        android:gravity="center_vertical"
         android:minWidth="246dp"
-        android:textSize="22sp"
         android:paddingLeft="6dp"
         android:paddingTop="6dp"
-        android:layout_marginTop="6dp"
-        android:textIsSelectable="false"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:spinnerMode="dialog"
-        android:gravity="center_vertical"
         android:textAlignment="center"
-        android:background="@drawable/abc_popup_background_mtrl_mult"
-        android:layout_weight="0.16" />
+        android:textIsSelectable="false"
+        android:textSize="22sp" />
 
 
     <Button
+        android:id="@+id/button_start"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@android:drawable/presence_online"
-        android:text="Start"
-        android:id="@+id/button_start"
-        android:layout_marginTop="70dp"
         android:layout_below="@+id/spinner_mode"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/abc_background_cache_hint_selector_material_light"
-        android:textStyle="bold"
         android:layout_gravity="center"
-        android:textAppearance="@color/abc_btn_colored_text_material"
+        android:layout_marginTop="70dp"
+        android:background="@android:drawable/presence_online"
+        android:hint="Start"
+        android:text="Start"
         android:textAlignment="center"
-        android:visibility="visible"
+        android:textAppearance="@color/abc_btn_colored_text_material"
+        android:textColor="@color/abc_background_cache_hint_selector_material_light"
         android:textColorLink="@color/abc_background_cache_hint_selector_material_light"
-        android:hint="Start"/>
+        android:textStyle="bold"
+        android:visibility="visible" />
 
+    <Button
+        android:id="@+id/button_upload_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Upload" />
 </LinearLayout>

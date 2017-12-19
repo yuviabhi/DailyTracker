@@ -1,6 +1,5 @@
 package com.abhisek.activitysensor;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -8,7 +7,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -20,7 +18,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -28,18 +25,26 @@ import au.com.bytecode.opencsv.CSVWriter;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
+    Button btn_stop;
     private SensorManager sensorManager;
     private boolean color = false;
     private View view;
     private long lastUpdate;
-
-
     private TextView txtView_x;
     private TextView txtView_y;
     private TextView txtView_z;
     private TextView txtView_time;
 
-    Button btn_stop ;
+    public static String getFileName() {
+
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+        date = date.replace("-", "");
+
+        String fileName = "AccSensor_Data_" + date + ".csv";
+
+        return fileName;
+    }
 
     /**
      * Called when the activity is first created.
@@ -78,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             }
         });
+
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lastUpdate = System.currentTimeMillis();
@@ -149,11 +155,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             txtView_time.setText("Timestamp : " + timestamp);
 //            System.out.println("Timestamp : " + timestamp);
 
-            String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-
-            date= date.replace("-","");
-
-            String fileName = "AccSensor_Data_"+date+".csv";
+//            String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());//
+//            date= date.replace("-","");//
+//            String fileName = "AccSensor_Data_"+date+".csv";
+            String fileName = getFileName();
 
             write2csv(values, timestamp, mode, fileName);
 

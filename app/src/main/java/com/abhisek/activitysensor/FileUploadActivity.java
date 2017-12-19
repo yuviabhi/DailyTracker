@@ -1,6 +1,7 @@
 package com.abhisek.activitysensor;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,13 +15,18 @@ import java.io.FileInputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Random;
 
 public class FileUploadActivity extends AppCompatActivity {
 
 
-    final String uploadFileName = "AccSensor_Data_*.csv";
+    final String uploadFileName_dayT = MainActivity.getFileName();
+    final String uploadFileName_nday = "AccSensor_Data_merged.csv";
     Button btn_upload_nday = null;
     Button btn_upload_dayT = null;
+    Button btn_track = null;
+    boolean is_uploaded_nday = false;
+    boolean is_uploaded_dayT = false;
     int serverResponseCode = 0;
     ProgressDialog dialog = null;
     /*************
@@ -37,6 +43,39 @@ public class FileUploadActivity extends AppCompatActivity {
 
         btn_upload_dayT = (Button) findViewById(R.id.button_dayT);
 
+        btn_track = (Button) findViewById(R.id.button_trackToday);
+
+
+        btn_upload_nday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog = ProgressDialog.show(FileUploadActivity.this, "", "Uploading file...", true);
+
+                new Thread(new Runnable() {
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                //messageText.setText("uploading started.....");
+                                Toast.makeText(getApplicationContext(), "Uploading...", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
+                        String uploadFilePath = baseDir + File.separator + uploadFileName_nday;
+
+                        int server_response_code = uploadFile(uploadFilePath);
+                        if (server_response_code == 200) {
+                            is_uploaded_nday = true;
+                        }
+
+                    }
+
+                }).start();
+            }
+        });
+
+
         btn_upload_dayT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,7 +91,12 @@ public class FileUploadActivity extends AppCompatActivity {
                             }
                         });
 
-                        uploadFile(uploadFileName);
+                        String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
+                        String uploadFilePath = baseDir + File.separator + uploadFileName_dayT;
+                        int server_response_code = uploadFile(uploadFilePath);
+                        if (server_response_code == 200) {
+                            is_uploaded_dayT = true;
+                        }
 
                     }
 
@@ -60,6 +104,76 @@ public class FileUploadActivity extends AppCompatActivity {
             }
         });
 
+
+        btn_track.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog = ProgressDialog.show(FileUploadActivity.this, "", "Tracking your day...", true);
+
+                new Thread(new Runnable() {
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                //messageText.setText("uploading started.....");
+                                Toast.makeText(getApplicationContext(), "Computing...", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                        if (is_uploaded_dayT && is_uploaded_nday) {
+
+                            boolean is_regular_day = track_your_day();
+                            dialog.dismiss();
+                            if (is_regular_day) {
+                                Intent intent = new Intent(getApplicationContext(), RegularActivity.class);
+                                //                intent.putExtra("mode",mode);
+                                startActivity(intent);
+                            } else {
+
+                                Intent intent = new Intent(getApplicationContext(), IrregularActivity.class);
+                                //                intent.putExtra("mode",mode);
+                                startActivity(intent);
+
+                            }
+                        } else {
+                            Toast.makeText(FileUploadActivity.this, "Please upload files !", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+
+                }).start();
+            }
+        });
+
+    }
+
+    private boolean track_your_day() {
+
+
+//        int random=1;
+
+        int random_num = getRandom(0, 100);
+
+        int sleep_timer = getRandom(5, 10);
+
+        try {
+            Thread.sleep(sleep_timer * 1000);  //1000 = 1 sec
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return random_num % 2 == 0;
+    }
+
+    private int getRandom(int Low, int High) {
+
+        Random r = new Random();
+//        int Low = 1;
+//        int High = 100;
+        int Result = r.nextInt(High - Low) + Low;
+        return Result;
     }
 
 
@@ -82,12 +196,12 @@ public class FileUploadActivity extends AppCompatActivity {
             dialog.dismiss();
 
             Log.e("uploadFile", "Source File not exist :"
-                    + uploadFileName);
+                    + uploadFileName_dayT);
 
             runOnUiThread(new Runnable() {
                 public void run() {
                     //messageText.setText("Source File not exist :"
-                    //        +uploadFilePath + "" + uploadFileName);
+                    //        +uploadFilePath + "" + uploadFileName_dayT);
                     Toast.makeText(FileUploadActivity.this, "Source File not Exist", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -156,10 +270,10 @@ public class FileUploadActivity extends AppCompatActivity {
 
 //                            String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
 //                                    +" http://www.androidexample.com/media/uploads/"
-//                                    +uploadFileName;
+//                                    +uploadFileName_dayT;
 
                             //messageText.setText(msg);
-                            Toast.makeText(FileUploadActivity.this, "File Upload Complete.",
+                            Toast.makeText(FileUploadActivity.this, "File Upload Successful.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -192,7 +306,7 @@ public class FileUploadActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         //messageText.setText("Got Exception : see logcat ");
-                        Toast.makeText(FileUploadActivity.this, "Got Exception : see logcat ",
+                        Toast.makeText(FileUploadActivity.this, "Got Connection Exception : see logcat ",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });

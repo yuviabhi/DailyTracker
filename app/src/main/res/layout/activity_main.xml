@@ -2,26 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:baselineAligned="false"
-    android:theme="@style/AppTheme"
     android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:theme="@style/AppTheme"
     android:weightSum="1">
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center_vertical|fill_vertical|center_horizontal"
         android:text="Accelerometer  Sensor"
-        android:id="@+id/textView2"
-        android:gravity="center_vertical|fill_vertical|center_horizontal" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:text="Shake to get a toast and to switch color"
-        android:gravity="center_vertical|center_horizontal" />
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Shake to get a toast and to switch color" />
 
     <TextView
         android:id="@+id/textView_x"
@@ -48,14 +48,15 @@
         android:text="Timestamp : " />
 
     <Button
+        android:id="@+id/button_stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button_stop"
         android:layout_gravity="center_horizontal"
-        android:background="@android:drawable/presence_offline"
         android:layout_weight="0.23"
+        android:background="@android:drawable/presence_offline"
         android:gravity="center_vertical|center_horizontal"
-        android:visibility="visible"
-        android:hint="Stop" />
+        android:hint="Stop"
+        android:visibility="visible" />
+
 
 </LinearLayout>
