@@ -1,5 +1,5 @@
 # DailyTracker
-Daily Tracker : Monitoring daily activity  routine to know your health / mental status.
+Daily Tracker : Monitoring daily activity routine to know how you day was.
 
 Smartphone Computing Project. Autumn 2017. 
 #IITKGP  
